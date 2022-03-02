@@ -1,6 +1,6 @@
 <?php
 
-namespace Atorscho\Breadcrumbs;
+namespace ATStudio\Breadcrumbs;
 
 use Illuminate\Support\ServiceProvider;
 
