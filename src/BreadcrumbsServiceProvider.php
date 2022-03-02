@@ -14,7 +14,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'../config/breadcrumbs.php' => config_path('breadcrumbs.php'),
+            __DIR__.'/../config/breadcrumbs.php' => config_path('breadcrumbs.php'),
         ], 'breadcrumbs');
     }
 
@@ -25,6 +25,6 @@ class BreadcrumbsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'../config/breadcrumbs.php', 'breadcrumbs');
+        $this->mergeConfigFrom(__DIR__.'/../config/breadcrumbs.php', 'breadcrumbs');
     }
 }
