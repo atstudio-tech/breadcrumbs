@@ -1,0 +1,33 @@
+{
+    "name": "atstudio-tech/laravel-breadcrumbs",
+    "description": "Yet another breadcrumbs package for Laravel. Simple and easy to use.",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "breadcrumbs",
+        "crumbs",
+        "navigation"
+    ],
+    "readme": "./README.md",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0|^8.1",
+        "illuminate/support": "^8.0|^9.0"
+    },
+    "replace": {
+        "atorscho/laravel-breadcrumbs": "2.4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ATStudio\\Breadcrumbs\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ATStudio\\Breadcrumbs\\BreadcrumbsServiceProvider"
+            ]
+        }
+    }
+}
