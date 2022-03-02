@@ -1,6 +1,6 @@
 {
-    "name": "atstudio-tech/laravel-breadcrumbs",
-    "description": "Yet another breadcrumbs package for Laravel. Simple and easy to use.",
+    "name": "atstudio-tech/breadcrumbs",
+    "description": "Yet another breadcrumbs package for Laravel: simple and easy to use.",
     "type": "library",
     "keywords": [
         "laravel",

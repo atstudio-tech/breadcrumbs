@@ -1,8 +1,6 @@
 # Laravel Breadcrumbs
 
-Yet another simple and useful breadcrumbs package for Laravel 7.
-
-> For [v1][branch-v1] and [v2][branch-v2], you can check out their corresponding branches.
+Yet another breadcrumbs package for Laravel: simple and easy to use.
 
 ## Documentation
 > Not yet prepared.
@@ -11,6 +9,4 @@ Yet another simple and useful breadcrumbs package for Laravel 7.
 
 The [CHANGELOG][changelog] file will tell you about all changes to this package.
 
-[branch-v1]: https://github.com/atorscho/laravel-breadcrumbs/tree/v1
-[branch-v2]: https://github.com/atorscho/laravel-breadcrumbs/tree/v2
-[changelog]: https://github.com/atorscho/laravel-breadcrumbs/blob/master/CHANGELOG.md
+[changelog]: https://github.com/atstudio-tech/breadcrumbs/blob/main/CHANGELOG.md
