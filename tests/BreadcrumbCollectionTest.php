@@ -9,7 +9,7 @@ use Illuminate\Routing\RouteCollection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-class BreadcrumbsTest extends TestCase
+class BreadcrumbCollectionTest extends TestCase
 {
     /** @test */
     public function it_returns_a_class_singleton()
