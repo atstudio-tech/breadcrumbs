@@ -2,7 +2,7 @@
 
 namespace ATStudio\Breadcrumbs\Tests;
 
-use ATStudio\Breadcrumbs\Breadcrumbs;
+use ATStudio\Breadcrumbs\BreadcrumbCollection;
 use ATStudio\Breadcrumbs\Exceptions\InvalidBreadcrumbOptions;
 use ATStudio\Breadcrumbs\Facades\Crumbs;
 use Illuminate\Routing\RouteCollection;
@@ -14,9 +14,9 @@ class BreadcrumbsTest extends TestCase
     /** @test */
     public function it_returns_a_class_singleton()
     {
-        $this->assertInstanceOf(Breadcrumbs::class, crumbs());
-        $this->assertInstanceOf(Breadcrumbs::class, Breadcrumbs::instance());
-        $this->assertSame(crumbs(), Breadcrumbs::instance());
+        $this->assertInstanceOf(BreadcrumbCollection::class, crumbs());
+        $this->assertInstanceOf(BreadcrumbCollection::class, BreadcrumbCollection::instance());
+        $this->assertSame(crumbs(), BreadcrumbCollection::instance());
     }
 
     /** @test */
@@ -32,7 +32,7 @@ class BreadcrumbsTest extends TestCase
     /** @test */
     public function it_accepts_a_title_and_a_path()
     {
-        Breadcrumbs::instance()
+        BreadcrumbCollection::instance()
             ->add('Main Section', '/main')
             ->add('Last Section', '/main/last');
 
@@ -103,7 +103,7 @@ class BreadcrumbsTest extends TestCase
     /** @test */
     public function it_accepts_a_closure()
     {
-        crumbs(function (Breadcrumbs $crumbs) {
+        crumbs(function (BreadcrumbCollection $crumbs) {
             $crumbs
                 ->add('Main Page', '/main')
                 ->add('Sub Page', '/main/sub')
@@ -125,14 +125,3 @@ class BreadcrumbsTest extends TestCase
         Route::shouldReceive('getRoutes')->andReturn($collection);
     }
 }
-
-
-/*
-
-crumbs(function ($crumbs) {
-    $crumbs->add(...)
-    $crumbs->add(...)
-    $crumbs->add(...)
-})
-
-*/

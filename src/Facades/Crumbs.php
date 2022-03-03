@@ -2,11 +2,11 @@
 
 namespace ATStudio\Breadcrumbs\Facades;
 
-use ATStudio\Breadcrumbs\Breadcrumbs;
+use ATStudio\Breadcrumbs\BreadcrumbCollection;
 use Illuminate\Support\Collection;
 
 /**
- * @method static Breadcrumbs add(string|array $title, ?string $path = null, array $params = [])
+ * @method static BreadcrumbCollection add(string|array $title, ?string $path = null, array $params = [])
  * @method static Collection all()
  */
 class Crumbs extends \Illuminate\Support\Facades\Facade

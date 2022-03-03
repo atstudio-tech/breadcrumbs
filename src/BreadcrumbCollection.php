@@ -4,7 +4,7 @@ namespace ATStudio\Breadcrumbs;
 
 use Illuminate\Support\Collection;
 
-class Breadcrumbs
+class BreadcrumbCollection
 {
     /**
      * A list of breadcrumbs' items.
