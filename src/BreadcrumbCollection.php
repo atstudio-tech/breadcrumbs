@@ -2,9 +2,15 @@
 
 namespace ATStudio\Breadcrumbs;
 
+use ArrayAccess;
+use Countable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
+use IteratorAggregate;
+use Traversable;
 
-class BreadcrumbCollection
+class BreadcrumbCollection implements Arrayable, ArrayAccess, Countable, IteratorAggregate, Jsonable
 {
     /**
      * A list of breadcrumbs' items.
@@ -60,5 +66,45 @@ class BreadcrumbCollection
     public function __toString(): string
     {
         return $this->render();
+    }
+
+    public function toArray(): array
+    {
+        return $this->crumbs->toArray();
+    }
+
+    public function offsetExists(mixed $offset): bool
+    {
+        return isset($this->crumbs[$offset]);
+    }
+
+    public function offsetGet(mixed $offset): mixed
+    {
+        return $this->crumbs[$offset];
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->crumbs[$offset] = $value;
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        $this->crumbs->forget($offset);
+    }
+
+    public function count(): int
+    {
+        return count($this->crumbs);
+    }
+
+    public function getIterator(): Traversable
+    {
+        return $this->crumbs;
+    }
+
+    public function toJson($options = 0)
+    {
+        return $this->crumbs->toJson($options);
     }
 }

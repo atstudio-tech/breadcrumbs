@@ -2,12 +2,8 @@
 
 namespace ATStudio\Breadcrumbs\Tests;
 
+use ATStudio\Breadcrumbs\Breadcrumb;
 use ATStudio\Breadcrumbs\BreadcrumbCollection;
-use ATStudio\Breadcrumbs\Exceptions\InvalidBreadcrumbOptions;
-use ATStudio\Breadcrumbs\Facades\Crumbs;
-use Illuminate\Routing\RouteCollection;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
 class BreadcrumbCollectionTest extends TestCase
 {
@@ -20,108 +16,84 @@ class BreadcrumbCollectionTest extends TestCase
     }
 
     /** @test */
-    public function it_accepts_a_title_only_and_path_is_inferred()
+    public function it_can_be_converted_into_json_format()
     {
-        URL::shouldReceive('current')->andReturn('/main-section');
+        crumbs('First', '#first')->add('Second', '#second');
 
-        Crumbs::add('Main Section');
-
-        $this->assertEquals('/main-section', crumbs()->all()->first()->path);
+        $this->assertIsString(crumbs()->toJson());
+        $this->assertEquals('[{"title":"First","path":"#first"},{"title":"Second","path":"#second"}]', crumbs()->toJson());
     }
 
     /** @test */
-    public function it_accepts_a_title_and_a_path()
+    public function it_returns_a_breadcrumb_by_key()
     {
-        BreadcrumbCollection::instance()
-            ->add('Main Section', '/main')
-            ->add('Last Section', '/main/last');
+        crumbs('First', '#first')
+            ->add('Second', '#second')
+            ->add('Third', '#third');
 
-        $this->assertCount(2, Crumbs::all());
-        $this->assertEquals('Main Section', crumbs()->all()->first()->title);
-        $this->assertEquals('Last Section', crumbs()->all()->last()->title);
-        $this->assertEquals('http://localhost/main', crumbs()->all()->first()->path);
+        $this->assertEquals('First', crumbs()[0]->title);
+        $this->assertEquals('Third', crumbs()[2]->title);
     }
 
     /** @test */
-    public function it_accepts_a_route_name()
+    public function it_checks_whether_a_breadcrumb_exists_at_a_specified_index()
     {
-        $this->mockRoutes();
+        crumbs('First', '#first')
+            ->add('Second', '#second')
+            ->add('Third', '#third');
 
-        Crumbs::add('All Posts', 'posts.index');
-
-        $this->assertEquals('http://localhost/posts', crumbs()->all()->first()->path);
+        $this->assertArrayHasKey(1, crumbs());
+        $this->assertArrayNotHasKey(5, crumbs());
     }
 
     /** @test */
-    public function it_accepts_route_parameters()
+    public function it_sets_a_breadcrumb_at_a_specified_index()
     {
-        $this->mockRoutes();
+        crumbs('First', '#first');
+        crumbs()[3] = new Breadcrumb('Second', '#second');
 
-        Crumbs::add('Show Post #1', 'posts.show', [1]);
-        Crumbs::add('Show Post #2', 'posts.show', ['post' => 2]);
-
-        $this->assertEquals('http://localhost/posts/1', crumbs()->all()->first()->path);
-        $this->assertEquals('http://localhost/posts/2', crumbs()->all()->last()->path);
+        $this->assertCount(2, crumbs()->all());
+        $this->assertEquals('First', crumbs()[0]->title);
+        $this->assertEquals('Second', crumbs()[3]->title);
     }
 
     /** @test */
-    public function it_validates_options_array()
+    public function it_deletes_a_breadcrumb_at_a_given_index()
     {
-        $this->expectException(InvalidBreadcrumbOptions::class);
+        crumbs('First', '#first')
+            ->add('Second', '#second')
+            ->add('Third', '#third');
 
-        crumbs([
-            'name' => 'Invalid key',
-        ]);
+        unset(crumbs()[2]);
+
+        $this->assertCount(2, crumbs()->all());
+        $this->assertArrayNotHasKey(2, crumbs());
     }
 
     /** @test */
-    public function it_accepts_an_array_of_options()
+    public function it_counts_a_total_number_of_breadcrumb_items()
     {
-        crumbs([
-            'title' => 'About Page',
-            'path' => '/about',
-        ]);
+        crumbs('1', '#first')
+            ->add('2', '#second')
+            ->add('3', '#third')
+            ->add('4', '#fourth');
 
-        $this->assertEquals('About Page', crumbs()->all()->first()->title);
-        $this->assertEquals('http://localhost/about', crumbs()->all()->first()->path);
+        $this->assertCount(4, crumbs());
     }
 
     /** @test */
-    public function it_accepts_an_array_of_options_with_a_route_name()
+    public function it_is_iterable()
     {
-        $this->mockRoutes();
+        crumbs('1', '#first')
+            ->add('2', '#second')
+            ->add('3', '#third');
 
-        crumbs([
-            'title' => 'Post',
-            'path' => 'posts.show',
-            'params' => [10],
-        ]);
+        $i = 0;
 
-        $this->assertEquals('http://localhost/posts/10', crumbs()->all()->first()->path);
-    }
+        foreach (crumbs() as $k) {
+            $i++;
+        }
 
-    /** @test */
-    public function it_accepts_a_closure()
-    {
-        crumbs(function (BreadcrumbCollection $crumbs) {
-            $crumbs
-                ->add('Main Page', '/main')
-                ->add('Sub Page', '/main/sub')
-                ->add('Current Page', '/main/sub/current');
-        });
-
-        $this->assertCount(3, Crumbs::all());
-        $this->assertEquals('Main Page', crumbs()->all()->first()->title);
-        $this->assertEquals('Current Page', crumbs()->all()->last()->title);
-    }
-
-    private function mockRoutes(): void
-    {
-        $collection = new RouteCollection();
-        $collection->add(Route::get('/posts', fn() => 'all posts')->name('posts.index'));
-        $collection->add(Route::get('/posts/{post}', fn($post) => 'post #'.$post)->name('posts.show'));
-
-        Route::shouldReceive('has')->andReturn(true);
-        Route::shouldReceive('getRoutes')->andReturn($collection);
+        $this->assertEquals(3, $i);
     }
 }
