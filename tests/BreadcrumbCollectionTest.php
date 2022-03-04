@@ -4,6 +4,7 @@ namespace ATStudio\Breadcrumbs\Tests;
 
 use ATStudio\Breadcrumbs\Breadcrumb;
 use ATStudio\Breadcrumbs\BreadcrumbCollection;
+use ATStudio\Breadcrumbs\Facades\Crumbs;
 
 class BreadcrumbCollectionTest extends TestCase
 {
@@ -20,8 +21,8 @@ class BreadcrumbCollectionTest extends TestCase
     {
         crumbs('First', '#first')->add('Second', '#second');
 
-        $this->assertIsString(crumbs()->toJson());
-        $this->assertEquals('[{"title":"First","path":"#first"},{"title":"Second","path":"#second"}]', crumbs()->toJson());
+        $this->assertIsString(Crumbs::toJson());
+        $this->assertEquals('[{"title":"First","path":"#first","active":false},{"title":"Second","path":"#second","active":false}]', Crumbs::toJson());
     }
 
     /** @test */
@@ -95,5 +96,14 @@ class BreadcrumbCollectionTest extends TestCase
         }
 
         $this->assertEquals(3, $i);
+    }
+
+    /** @test */
+    public function it_is_arrayable()
+    {
+        crumbs('1', '#first')->add('2', '#second')->add('3', '#third');
+
+        $this->assertIsArray(Crumbs::toArray());
+        $this->assertCount(3, crumbs()->toArray());
     }
 }
