@@ -19,6 +19,11 @@ class Breadcrumb
      */
     public readonly string $path;
 
+    /**
+     * Whether the breadcrumb is a current page.
+     */
+    public readonly bool $active;
+
     public function __construct(
         string|array $title,
         ?string $path,
@@ -55,9 +60,13 @@ class Breadcrumb
 
         // Determine whether the given URL is a route name
         if (Route::has($path)) {
-            return route($path, Arr::wrap($params));
+            return tap(route($path, Arr::wrap($params)), function (string $path) {
+                $this->active = $path === URL::current();
+            });
         }
 
-        return url($path);
+        return tap(url($path), function (string $path) {
+            $this->active = $path === URL::current();
+        });
     }
 }

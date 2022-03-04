@@ -105,6 +105,33 @@ class BreadcrumbTest extends TestCase
         $this->assertEquals('Current Page', crumbs()[2]->title);
     }
 
+    /** @test */
+    public function it_determines_a_current_page()
+    {
+        Crumbs::add('Home Page', '/home');
+
+        URL::shouldReceive('current')->andReturn('http://localhost/about');
+        URL::shouldReceive('to')->andReturn('http://localhost/about');
+        Crumbs::add('About Us', '/about');
+
+        $this->assertFalse(crumbs()[0]->active);
+        $this->assertTrue(crumbs()[1]->active);
+    }
+
+    /** @test */
+    public function it_determines_a_current_page_using_route_names()
+    {
+        Crumbs::add('Posts', 'posts.index');
+
+        URL::shouldReceive('current')->andReturn('http://localhost/posts/1');
+        URL::shouldReceive('route')->andReturn('http://localhost/posts/1');
+        $this->mockRoutes();
+        Crumbs::add('Show Post', 'posts.show', 1);
+
+        $this->assertFalse(crumbs()[0]->active);
+        $this->assertTrue(crumbs()[1]->active);
+    }
+
     private function mockRoutes(): void
     {
         $collection = new RouteCollection();
