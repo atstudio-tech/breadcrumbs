@@ -7,6 +7,7 @@ use Countable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use IteratorAggregate;
 use Traversable;
 
@@ -55,9 +56,9 @@ class BreadcrumbCollection implements Arrayable, ArrayAccess, Countable, Iterato
     /**
      * Render a breadcrumbs list.
      */
-    public function render(): string
+    public function render(): View
     {
-        return print_r($this->crumbs);
+        return view(config('breadcrumbs.view'))->with('breadcrumbs', $this);
     }
 
     /**

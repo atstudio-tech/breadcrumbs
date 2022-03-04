@@ -14,8 +14,11 @@ class BreadcrumbsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'breadcrumbs');
+
         $this->publishes([
             __DIR__.'/../config/breadcrumbs.php' => config_path('breadcrumbs.php'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/breadcrumbs'),
         ], 'breadcrumbs');
     }
 

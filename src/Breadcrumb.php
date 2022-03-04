@@ -56,7 +56,11 @@ class Breadcrumb
      */
     protected function parseUrl(?string $path, mixed $params = null): string
     {
-        if (!$path) return URL::current();
+        if (!$path) {
+            $this->active = true;
+
+            return URL::current();
+        }
 
         // Determine whether the given URL is a route name
         if (Route::has($path)) {
