@@ -45,7 +45,7 @@ class BreadcrumbCollection implements Arrayable, ArrayAccess, Countable, Iterato
     /**
      * Add a new breadcrumb item.
      */
-    public function add(string|array $title, ?string $path = null, array $params = []): static
+    public function add(string|array $title, ?string $path = null, mixed $params = null): static
     {
         $this->crumbs[] = new Breadcrumb($title, $path, $params);
 

@@ -85,7 +85,7 @@ class BreadcrumbTest extends TestCase
         crumbs([
             'title' => 'Post',
             'path' => 'posts.show',
-            'params' => [10],
+            'params' => 10,
         ]);
 
         $this->assertEquals('http://localhost/posts/10', crumbs()[0]->path);

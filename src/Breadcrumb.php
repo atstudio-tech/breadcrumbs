@@ -3,6 +3,7 @@
 namespace ATStudio\Breadcrumbs;
 
 use ATStudio\Breadcrumbs\Exceptions\InvalidBreadcrumbOptions;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -21,7 +22,7 @@ class Breadcrumb
     public function __construct(
         string|array $title,
         ?string $path,
-        array $params = [],
+        mixed $params = null,
     )
     {
         if (is_string($title)) {
@@ -48,13 +49,13 @@ class Breadcrumb
     /**
      * Parse a path or a route name into an absolute URL.
      */
-    protected function parseUrl(?string $path, array $params = []): string
+    protected function parseUrl(?string $path, mixed $params = null): string
     {
         if (!$path) return URL::current();
 
         // Determine whether the given URL is a route name
         if (Route::has($path)) {
-            return route($path, $params);
+            return route($path, Arr::wrap($params));
         }
 
         return url($path);
