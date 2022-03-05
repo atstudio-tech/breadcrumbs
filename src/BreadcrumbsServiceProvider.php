@@ -16,12 +16,10 @@ class BreadcrumbsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'breadcrumbs');
-
-        $this->publishes([
-            __DIR__.'/../config/breadcrumbs.php' => config_path('breadcrumbs.php'),
-            __DIR__.'/../resources/views' => resource_path('views/vendor/breadcrumbs'),
-        ], 'breadcrumbs');
+        $this->registerConfig();
+        $this->registerViews();
+        $this->registerBladeDirective();
+        $this->registerMacros();
     }
 
     /**
@@ -31,11 +29,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/breadcrumbs.php', 'breadcrumbs');
-
         $this->registerSingleton();
-        $this->registerMacros();
-        $this->registerBladeDirective();
     }
 
     private function registerSingleton(): void
@@ -43,6 +37,22 @@ class BreadcrumbsServiceProvider extends ServiceProvider
         $this->app->singleton('crumbs', function () {
             return new BreadcrumbCollection();
         });
+    }
+
+    private function registerConfig(): void
+    {
+        $this->mergeConfigFrom(__DIR__.'/../config/breadcrumbs.php', 'breadcrumbs');
+        $this->publishes([
+            __DIR__.'/../config/breadcrumbs.php' => config_path('breadcrumbs.php'),
+        ], 'breadcrumbs-config');
+    }
+
+    private function registerViews(): void
+    {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'breadcrumbs');
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/breadcrumbs'),
+        ], 'breadcrumbs-views');
     }
 
     private function registerMacros(): void
