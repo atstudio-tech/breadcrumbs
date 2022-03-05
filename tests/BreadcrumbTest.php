@@ -2,7 +2,7 @@
 
 namespace ATStudio\Breadcrumbs\Tests;
 
-use ATStudio\Breadcrumbs\BreadcrumbCollection;
+use ATStudio\Breadcrumbs\Breadcrumbs;
 use ATStudio\Breadcrumbs\Exceptions\InvalidBreadcrumbOptions;
 use ATStudio\Breadcrumbs\Facades\Crumbs;
 use Illuminate\Routing\RouteCollection;
@@ -24,7 +24,7 @@ class BreadcrumbTest extends TestCase
     /** @test */
     public function it_accepts_a_title_and_a_path()
     {
-        BreadcrumbCollection::instance()
+        Breadcrumbs::instance()
             ->add('Main Section', '/main')
             ->add('Last Section', '/main/last');
 
@@ -94,7 +94,7 @@ class BreadcrumbTest extends TestCase
     /** @test */
     public function it_accepts_a_closure()
     {
-        crumbs(function (BreadcrumbCollection $crumbs) {
+        crumbs(function (Breadcrumbs $crumbs) {
             $crumbs
                 ->add('Main Page', '/main')
                 ->add('Sub Page', '/main/sub')

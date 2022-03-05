@@ -35,7 +35,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
     private function registerSingleton(): void
     {
         $this->app->singleton('crumbs', function () {
-            return new BreadcrumbCollection();
+            return new Breadcrumbs();
         });
     }
 

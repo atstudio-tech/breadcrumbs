@@ -11,7 +11,7 @@ use Illuminate\View\View;
 use IteratorAggregate;
 use Traversable;
 
-class BreadcrumbCollection implements Arrayable, ArrayAccess, Countable, IteratorAggregate, Jsonable
+class Breadcrumbs implements Arrayable, ArrayAccess, Countable, IteratorAggregate, Jsonable
 {
     /**
      * A list of breadcrumbs' items.

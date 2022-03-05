@@ -3,7 +3,7 @@
 namespace ATStudio\Breadcrumbs\Tests;
 
 use ATStudio\Breadcrumbs\Breadcrumb;
-use ATStudio\Breadcrumbs\BreadcrumbCollection;
+use ATStudio\Breadcrumbs\Breadcrumbs;
 use ATStudio\Breadcrumbs\Facades\Crumbs;
 
 class BreadcrumbCollectionTest extends TestCase
@@ -11,9 +11,9 @@ class BreadcrumbCollectionTest extends TestCase
     /** @test */
     public function it_returns_a_class_singleton()
     {
-        $this->assertInstanceOf(BreadcrumbCollection::class, crumbs());
-        $this->assertInstanceOf(BreadcrumbCollection::class, BreadcrumbCollection::instance());
-        $this->assertSame(crumbs(), BreadcrumbCollection::instance());
+        $this->assertInstanceOf(Breadcrumbs::class, crumbs());
+        $this->assertInstanceOf(Breadcrumbs::class, Breadcrumbs::instance());
+        $this->assertSame(crumbs(), Breadcrumbs::instance());
     }
 
     /** @test */

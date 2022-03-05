@@ -3,7 +3,7 @@
 namespace ATStudio\Breadcrumbs\Facades;
 
 /**
- * @method static \ATStudio\Breadcrumbs\BreadcrumbCollection add(string|array $title, ?string $path = null, mixed $params = null)
+ * @method static \ATStudio\Breadcrumbs\Breadcrumbs add(string|array $title, ?string $path = null, mixed $params = null)
  * @method static \Illuminate\Support\Collection all()
  * @method static \Illuminate\View\View render(?string $view = null)
  * @method static string toJson()
