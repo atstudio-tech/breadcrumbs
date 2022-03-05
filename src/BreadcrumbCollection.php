@@ -56,9 +56,9 @@ class BreadcrumbCollection implements Arrayable, ArrayAccess, Countable, Iterato
     /**
      * Render a breadcrumbs list.
      */
-    public function render(): View
+    public function render(?string $view = null): View
     {
-        return view(config('breadcrumbs.view'))->with('breadcrumbs', $this);
+        return view($view ?: config('breadcrumbs.view'))->with('breadcrumbs', $this);
     }
 
     /**

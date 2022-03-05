@@ -2,7 +2,9 @@
 
 namespace ATStudio\Breadcrumbs;
 
+use ATStudio\Breadcrumbs\Facades\Crumbs;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class BreadcrumbsServiceProvider extends ServiceProvider
@@ -33,6 +35,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
 
         $this->registerSingleton();
         $this->registerMacros();
+        $this->registerBladeDirective();
     }
 
     private function registerSingleton(): void
@@ -48,6 +51,13 @@ class BreadcrumbsServiceProvider extends ServiceProvider
             crumbs($closure);
 
             return $this;
+        });
+    }
+
+    private function registerBladeDirective(): void
+    {
+        Blade::directive('crumbs', function (?string $view = null) {
+            return Crumbs::render($view);
         });
     }
 }
