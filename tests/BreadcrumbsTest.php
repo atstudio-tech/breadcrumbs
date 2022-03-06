@@ -6,7 +6,7 @@ use ATStudio\Breadcrumbs\Breadcrumb;
 use ATStudio\Breadcrumbs\Breadcrumbs;
 use ATStudio\Breadcrumbs\Facades\Crumbs;
 
-class BreadcrumbCollectionTest extends TestCase
+class BreadcrumbsTest extends TestCase
 {
     /** @test */
     public function it_returns_a_class_singleton()
