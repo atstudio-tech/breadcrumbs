@@ -2,7 +2,7 @@
 
 All changes to the `laravel-breadcrumbs` package will be documented in this file.
 
-### 3.0.0
+### 3.0.0 - 2022-03-06
 
 Initial release.
 
