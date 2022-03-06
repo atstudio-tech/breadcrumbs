@@ -2,8 +2,10 @@
 
 namespace ATStudio\Breadcrumbs\Facades;
 
+use ATStudio\Breadcrumbs\Breadcrumbs;
+
 /**
- * @method static \ATStudio\Breadcrumbs\Breadcrumbs add(string|array $title, ?string $path = null, mixed $params = null)
+ * @method static Breadcrumbs add(string|array $title, ?string $path = null, mixed $params = null)
  * @method static \Illuminate\Support\Collection all()
  * @method static \Illuminate\View\View render(?string $view = null)
  * @method static string toJson()
@@ -14,6 +16,6 @@ class Crumbs extends \Illuminate\Support\Facades\Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'crumbs';
+        return Breadcrumbs::class;
     }
 }

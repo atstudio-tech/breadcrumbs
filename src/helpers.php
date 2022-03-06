@@ -8,7 +8,7 @@ if (!function_exists('crumbs')) {
      */
     function crumbs(string|array|callable|null $title = null, ?string $path = null, mixed $params = null): Breadcrumbs
     {
-        return tap(app('crumbs'), function (Breadcrumbs $crumbs) use ($params, $path, $title) {
+        return tap(app(Breadcrumbs::class), function (Breadcrumbs $crumbs) use ($params, $path, $title) {
             if (is_callable($title)) {
                 $title($crumbs);
             } elseif (!is_null($title)) {

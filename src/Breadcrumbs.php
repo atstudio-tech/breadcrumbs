@@ -30,7 +30,7 @@ class Breadcrumbs implements Arrayable, ArrayAccess, Countable, IteratorAggregat
      */
     public static function instance(): static
     {
-        return app('crumbs');
+        return app(static::class);
     }
 
     /**
