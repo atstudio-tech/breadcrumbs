@@ -8,9 +8,11 @@
             @if ($breadcrumb->active)
                 <li>{{ $breadcrumb->title }}</li>
             @else
-                <a href="{{ $breadcrumb->path }}">
-                    {{ $breadcrumb->title }}
-                </a>
+                <li>
+                    <a href="{{ $breadcrumb->path }}">
+                        {{ $breadcrumb->title }}
+                    </a>
+                </li>
             @endif
         @endforeach
     </ol>
