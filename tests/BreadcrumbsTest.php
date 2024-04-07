@@ -5,10 +5,11 @@ namespace ATStudio\Breadcrumbs\Tests;
 use ATStudio\Breadcrumbs\Breadcrumb;
 use ATStudio\Breadcrumbs\Breadcrumbs;
 use ATStudio\Breadcrumbs\Facades\Crumbs;
+use PHPUnit\Framework\Attributes\Test;
 
 class BreadcrumbsTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_returns_a_class_singleton()
     {
         $this->assertInstanceOf(Breadcrumbs::class, crumbs());
@@ -16,7 +17,7 @@ class BreadcrumbsTest extends TestCase
         $this->assertSame(crumbs(), Breadcrumbs::instance());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_converted_into_json_format()
     {
         crumbs('First', '#first')->add('Second', '#second');
@@ -25,7 +26,7 @@ class BreadcrumbsTest extends TestCase
         $this->assertEquals('[{"title":"First","path":"#first","active":false},{"title":"Second","path":"#second","active":false}]', Crumbs::toJson());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_a_breadcrumb_by_key()
     {
         crumbs('First', '#first')
@@ -36,7 +37,7 @@ class BreadcrumbsTest extends TestCase
         $this->assertEquals('Third', crumbs()[2]->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_checks_whether_a_breadcrumb_exists_at_a_specified_index()
     {
         crumbs('First', '#first')
@@ -47,7 +48,7 @@ class BreadcrumbsTest extends TestCase
         $this->assertArrayNotHasKey(5, crumbs());
     }
 
-    /** @test */
+    #[Test]
     public function it_sets_a_breadcrumb_at_a_specified_index()
     {
         crumbs('First', '#first');
@@ -58,7 +59,7 @@ class BreadcrumbsTest extends TestCase
         $this->assertEquals('Second', crumbs()[3]->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_deletes_a_breadcrumb_at_a_given_index()
     {
         crumbs('First', '#first')
@@ -71,7 +72,7 @@ class BreadcrumbsTest extends TestCase
         $this->assertArrayNotHasKey(2, crumbs());
     }
 
-    /** @test */
+    #[Test]
     public function it_counts_a_total_number_of_breadcrumb_items()
     {
         crumbs('1', '#first')
@@ -82,7 +83,7 @@ class BreadcrumbsTest extends TestCase
         $this->assertCount(4, crumbs());
     }
 
-    /** @test */
+    #[Test]
     public function it_is_iterable()
     {
         crumbs('1', '#first')
@@ -98,7 +99,7 @@ class BreadcrumbsTest extends TestCase
         $this->assertEquals(3, $i);
     }
 
-    /** @test */
+    #[Test]
     public function it_is_arrayable()
     {
         crumbs('1', '#first')->add('2', '#second')->add('3', '#third');
