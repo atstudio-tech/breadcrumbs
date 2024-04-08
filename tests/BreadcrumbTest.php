@@ -8,10 +8,11 @@ use ATStudio\Breadcrumbs\Facades\Crumbs;
 use Illuminate\Routing\RouteCollection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use PHPUnit\Framework\Attributes\Test;
 
 class BreadcrumbTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_accepts_a_title_only_and_path_is_inferred()
     {
         URL::shouldReceive('current')->andReturn('/main-section');
@@ -21,7 +22,7 @@ class BreadcrumbTest extends TestCase
         $this->assertEquals('/main-section', crumbs()[0]->path);
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_a_title_and_a_path()
     {
         Breadcrumbs::instance()
@@ -33,7 +34,7 @@ class BreadcrumbTest extends TestCase
         $this->assertEquals('Last Section', crumbs()[1]->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_a_route_name()
     {
         $this->mockRoutes();
@@ -43,7 +44,7 @@ class BreadcrumbTest extends TestCase
         $this->assertEquals('http://localhost/posts', crumbs()[0]->path);
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_route_parameters()
     {
         $this->mockRoutes();
@@ -55,7 +56,7 @@ class BreadcrumbTest extends TestCase
         $this->assertEquals('http://localhost/posts/2', crumbs()[1]->path);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_options_array()
     {
         $this->expectException(InvalidBreadcrumbOptions::class);
@@ -65,7 +66,7 @@ class BreadcrumbTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_an_array_of_options()
     {
         crumbs([
@@ -77,7 +78,7 @@ class BreadcrumbTest extends TestCase
         $this->assertEquals('http://localhost/about', crumbs()[0]->path);
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_an_array_of_options_with_a_route_name()
     {
         $this->mockRoutes();
@@ -91,7 +92,7 @@ class BreadcrumbTest extends TestCase
         $this->assertEquals('http://localhost/posts/10', crumbs()[0]->path);
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_a_closure()
     {
         crumbs(function (Breadcrumbs $crumbs) {
@@ -105,7 +106,7 @@ class BreadcrumbTest extends TestCase
         $this->assertEquals('Current Page', crumbs()[2]->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_determines_a_current_page()
     {
         Crumbs::add('Home Page', '/home');
@@ -118,7 +119,7 @@ class BreadcrumbTest extends TestCase
         $this->assertTrue(crumbs()[1]->active);
     }
 
-    /** @test */
+    #[Test]
     public function it_determines_a_current_page_using_route_names()
     {
         Crumbs::add('Posts', 'posts.index');
