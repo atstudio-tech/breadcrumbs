@@ -2,6 +2,9 @@
 
 All changes to the `laravel-breadcrumbs` package will be documented in this file.
 
+## 3.0.2 – 2025-05-31
+- Added support for Laravel 12
+
 ## 3.0.1 — 2022-09-02
 ### Fixed
 - Bug where breadcrumbs were not rendered.
